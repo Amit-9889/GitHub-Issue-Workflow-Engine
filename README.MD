@@ -41,19 +41,21 @@ flowchart TD
 ```
 ## 🔄 Webhook Processing Flow
 ```text
-sequenceDiagram
-    participant GH as GitHub
-    participant API as FastAPI Server
-    participant Graph as LangGraph
-    participant LLM as LLM Engine
-    participant GitHubAPI as GitHub REST API
 
-    GH->>API: Issue Opened Webhook
-    API->>API: Validate Action == "opened"
-    API->>Graph: Pass Issue State
-    Graph->>LLM: Analyze Issue
-    LLM-->>Graph: Structured Output
-    Graph->>GitHubAPI: (Future) Add Labels / Comment
+    1. GH as GitHub
+    2. API as FastAPI Server
+    3. Graph as LangGraph
+    4. LLM as LLM Engine
+    5. GitHubAPI as GitHub REST API
+
+-------  Below short form are defined above ------
+
+    1. GH->>API: Issue Opened Webhook
+    2. API->>API: Validate Action == "opened"
+    3. API->>Graph: Pass Issue State
+    4. Graph->>LLM: Analyze Issue
+    5. LLM-->>Graph: Structured Output
+    5. Graph->>GitHubAPI: (Future) Add Labels / Comment
 
 ```
 
@@ -61,7 +63,9 @@ sequenceDiagram
 ## 🧠 Internal Module Interaction
 
 ```text
+
 flowchart LR
+
     main.py --> graph
     graph --> llm
     graph --> mcp
