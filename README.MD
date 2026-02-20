@@ -1,9 +1,9 @@
-#GitHub Issue Automation System
+# GitHub Issue Automation System
 
 An AI-powered automation system that listens to GitHub issue events via webhooks and intelligently triages, analyzes, and processes issues using a LangGraph-based workflow.
 This system automatically handles newly opened issues and routes them through an LLM-powered workflow for classification, prioritization, and decision-making.
 
-##🏗️ System Architecture
+## 🏗️ System Architecture
 
 ```mermaid
 flowchart TD
@@ -16,7 +16,7 @@ flowchart TD
     G --> H[GitHub API Action]
 
 ```
-##📂 Project Structure
+## 📂 Project Structure
 ```text
 .
 ├── app/
@@ -39,7 +39,7 @@ flowchart TD
 └── README.md
 
 ```
-##🔄 Webhook Processing Flow
+## 🔄 Webhook Processing Flow
 ```text
 sequenceDiagram
     participant GH as GitHub
@@ -58,7 +58,7 @@ sequenceDiagram
 ```
 
 
-##🧠 Internal Module Interaction
+## 🧠 Internal Module Interaction
 
 ```text
 flowchart LR
@@ -69,71 +69,71 @@ flowchart LR
     mcp --> utils
 
 ```
-##⚙️ Running the Project
+## ⚙️ Running the Project
 
-    ###Local Development
+    ### Local Development
         uvicorn app.main:app --reload
 
-    ###Docker
+    ### Docker
 
         docker build -t github-issue-automation .
         docker run -p 8000:8000 github-issue-automation
 
-##🔐 Environment Variables
+## 🔐 Environment Variables
 
         Create .env file:
 
         GROK_API_KEY=your_key  ## You can use any providers api key
         GITHUB_TOKEN=your_token
 
-##🛠️ Setup Instructions
+## 🛠️ Setup Instructions
 
-    ###1️⃣ Clone the Repository
+    ### 1️⃣ Clone the Repository
 
         git clone https://github.com/your-username/github-issue-automation.git
         cd github-issue-automation
 
-    ###2️⃣ Create Virtual Environment
+    ### 2️⃣ Create Virtual Environment
 
         python -m venv myenv
         source myenv/bin/activate   # Mac/Linux
         myenv\Scripts\activate      # Windows
 
-    ###3️⃣ Install Dependencies
+    ### 3️⃣ Install Dependencies
 
         pip install -r requirements.txt
 
-    ###4️⃣ Run the Server
+    ### 4️⃣ Run the Server
 
         uvicorn app.main:app --reload --port 8000 ## main webhook api endpoint
         uvicorn app.mcp.server --reload --port 9000 ## api endpoints for labels, comment and assign tools
 
-        ####NOTE: Make sure you install (ngrok) and run in cmd at 8000 port to make webhook endpoint available for github , if you are running it locally.
+        #### NOTE: Make sure you install (ngrok) and run in cmd at 8000 port to make webhook endpoint available for github , if you are running it locally.
 
-##Server runs at:
+## Server runs at:
 
         http://localhost:8000  --> Webhook server endpoint
         http://localhost:9000  --> label, comment , assign tools server endpoint
         
 
-##🔗 GitHub Webhook Configuration
+## 🔗 GitHub Webhook Configuration
 
-    ###Go to your GitHub repository.
+    ### Go to your GitHub repository.
 
         Settings → Webhooks → Add Webhook
 
-    ###Payload URL:
+    ### Payload URL:
 
         https://your-domain.com/webhook
 
-    ###Content Type:
+    ### Content Type:
 
         application/json
 
-    ###Select:
+    ### Select:
 
         Issues
 
-Now every new issue will trigger your system.
+#### Now every new issue will trigger your system.
 
 
