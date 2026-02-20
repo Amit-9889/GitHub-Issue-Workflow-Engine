@@ -71,10 +71,10 @@ flowchart LR
 ```
 ## ⚙️ Running the Project
 
-    ### Local Development
+    ## Local Development
         uvicorn app.main:app --reload
 
-    ### Docker
+    ## Docker
 
         docker build -t github-issue-automation .
         docker run -p 8000:8000 github-issue-automation
