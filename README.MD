@@ -1,9 +1,11 @@
 GitHub Issue Automation System
 
 An AI-powered automation system that listens to GitHub issue events via webhooks and intelligently triages, analyzes, and processes issues using a LangGraph-based workflow.
-
 This system automatically handles newly opened issues and routes them through an LLM-powered workflow for classification, prioritization, and decision-making.
+
 🏗️ System Architecture
+
+```mermaid
 flowchart TD
     A[GitHub Issue Opened] --> B[GitHub Webhook]
     B --> C[FastAPI Server /webhook]
@@ -12,6 +14,8 @@ flowchart TD
     E --> F[LLM Processing Layer]
     F --> G[MCP / Tools Layer]
     G --> H[GitHub API Action]
+
+```
 📂 Project Structure
 .
 ├── app/
