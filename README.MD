@@ -17,7 +17,7 @@ flowchart TD
 
 ```
 📂 Project Structure
-```mermaid
+```text
 .
 ├── app/
 │   ├── main.py              # FastAPI entry point
@@ -40,7 +40,7 @@ flowchart TD
 
 ```
 🔄 Webhook Processing Flow
-```mermaid
+```text
 sequenceDiagram
     participant GH as GitHub
     participant API as FastAPI Server
