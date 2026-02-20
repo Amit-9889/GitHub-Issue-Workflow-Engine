@@ -17,6 +17,7 @@ flowchart TD
 
 ```
 📂 Project Structure
+```mermaid
 .
 ├── app/
 │   ├── main.py              # FastAPI entry point
@@ -36,7 +37,10 @@ flowchart TD
 ├── .env                     # Environment variables (DO NOT COMMIT)
 ├── .gitignore
 └── README.md
+
+```
 🔄 Webhook Processing Flow
+```mermaid
 sequenceDiagram
     participant GH as GitHub
     participant API as FastAPI Server
@@ -50,64 +54,75 @@ sequenceDiagram
     Graph->>LLM: Analyze Issue
     LLM-->>Graph: Structured Output
     Graph->>GitHubAPI: (Future) Add Labels / Comment
+
+```
+
+
 🧠 Internal Module Interaction
+
+```mermaid
 flowchart LR
     main.py --> graph
     graph --> llm
     graph --> mcp
     llm --> utils
     mcp --> utils
+
+```
 ⚙️ Running the Project
-Local Development
-uvicorn app.main:app --reload
-Docker
-docker build -t github-issue-automation .
-docker run -p 8000:8000 github-issue-automation
+
+    **Local Development**
+        uvicorn app.main:app --reload
+
+    **Docker**
+
+        docker build -t github-issue-automation .
+        docker run -p 8000:8000 github-issue-automation
+
 🔐 Environment Variables
 
-Create .env file:
+        Create .env file:
 
-OPENAI_API_KEY=your_key
-GITHUB_TOKEN=your_token
+        GROK_API_KEY=your_key  ## You can use any providers api key
+        GITHUB_TOKEN=your_token
+
 🛠️ Setup Instructions
-1️⃣ Clone the Repository
-git clone https://github.com/your-username/github-issue-automation.git
-cd github-issue-automation
-2️⃣ Create Virtual Environment
-python -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
-3️⃣ Install Dependencies
-pip install -r requirements.txt
-4️⃣ Run the Server
-uvicorn app.main:app --reload
+
+    1️⃣ Clone the Repository
+        git clone https://github.com/your-username/github-issue-automation.git
+        cd github-issue-automation
+    2️⃣ Create Virtual Environment
+        python -m venv myenv
+        source myenv/bin/activate   # Mac/Linux
+        myenv\Scripts\activate      # Windows
+
+    3️⃣ Install Dependencies
+        pip install -r requirements.txt
+    4️⃣ Run the Server
+        uvicorn app.main:app --reload
 
 Server runs at:
 
-http://localhost:8000
+        http://localhost:8000
+
 🔗 GitHub Webhook Configuration
 
-Go to your GitHub repository.
+    Go to your GitHub repository.
 
-Settings → Webhooks → Add Webhook
+        Settings → Webhooks → Add Webhook
 
-Payload URL:
+    Payload URL:
 
-https://your-domain.com/webhook
+        https://your-domain.com/webhook
 
-Content Type:
+    Content Type:
 
-application/json
+        application/json
 
-Select:
+    Select:
 
-Issues
+        Issues
 
 Now every new issue will trigger your system.
 
-🔐 Environment Variables
 
-Create a .env file:
-
-OPENAI_API_KEY=your_openai_key
-GITHUB_TOKEN=your_github_token
