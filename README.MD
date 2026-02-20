@@ -3,90 +3,68 @@ GitHub Issue Automation System
 An AI-powered automation system that listens to GitHub issue events via webhooks and intelligently triages, analyzes, and processes issues using a LangGraph-based workflow.
 
 This system automatically handles newly opened issues and routes them through an LLM-powered workflow for classification, prioritization, and decision-making.
-
-📌 Project Overview
-
-When a new issue is opened in a GitHub repository:
-
-    1.GitHub sends a webhook event to our FastAPI server.
-
-    2.The server extracts issue details.
-
-    3.A LangGraph workflow processes the issue.
-
-The system can:
-
-Classify issue type
-
-Assign priority
-
-Generate responses
-
-Trigger automated actions (labels, comments, etc.)
-
-This eliminates manual triaging and improves issue handling efficiency.
-
-🏗️ Architecture
-GitHub Issue Created
-        ↓
-GitHub Webhook
-        ↓
-FastAPI Server (/webhook)
-        ↓
-LangGraph Workflow
-        ↓
-LLM Decision Engine
-        ↓
-Automated GitHub API Action
-⚙️ Tech Stack
-
-Backend: FastAPI
-
-Workflow Engine: LangGraph
-
-LLM Integration: OpenAI API
-
-Event Handling: GitHub Webhooks
-
-API Communication: GitHub REST API
-
-Language: Python 3.11+
-
+🏗️ System Architecture
+flowchart TD
+    A[GitHub Issue Opened] --> B[GitHub Webhook]
+    B --> C[FastAPI Server /webhook]
+    C --> D[State Creation]
+    D --> E[LangGraph Workflow]
+    E --> F[LLM Processing Layer]
+    F --> G[MCP / Tools Layer]
+    G --> H[GitHub API Action]
 📂 Project Structure
-app/
+.
+├── app/
+│   ├── main.py              # FastAPI entry point
+│   │
+│   ├── config/              # Configuration management
+│   ├── graph/               # LangGraph workflow definitions
+│   ├── llm/                 # LLM integration layer
+│   ├── mcp/                 # Tool orchestration / MCP layer
+│   ├── utils/               # Helper utilities
+│   └── __pycache__/
 │
-├── main.py               # FastAPI app & webhook endpoint
-├── graph/
-│   └── workflow.py       # LangGraph workflow builder
+├── tests/                   # Unit & integration tests
 │
-└── services/             # (future) GitHub + LLM integrations
-🔁 How It Works
-1️⃣ GitHub Webhook
+├── Dockerfile               # Container setup
+├── requirements.txt         # Dependencies
+├── run.sh                   # Startup script
+├── .env                     # Environment variables (DO NOT COMMIT)
+├── .gitignore
+└── README.md
+🔄 Webhook Processing Flow
+sequenceDiagram
+    participant GH as GitHub
+    participant API as FastAPI Server
+    participant Graph as LangGraph
+    participant LLM as LLM Engine
+    participant GitHubAPI as GitHub REST API
 
-GitHub sends a POST request when an issue is opened.
+    GH->>API: Issue Opened Webhook
+    API->>API: Validate Action == "opened"
+    API->>Graph: Pass Issue State
+    Graph->>LLM: Analyze Issue
+    LLM-->>Graph: Structured Output
+    Graph->>GitHubAPI: (Future) Add Labels / Comment
+🧠 Internal Module Interaction
+flowchart LR
+    main.py --> graph
+    graph --> llm
+    graph --> mcp
+    llm --> utils
+    mcp --> utils
+⚙️ Running the Project
+Local Development
+uvicorn app.main:app --reload
+Docker
+docker build -t github-issue-automation .
+docker run -p 8000:8000 github-issue-automation
+🔐 Environment Variables
 
-Endpoint: /webhook
+Create .env file:
 
-Only processes "action": "opened" events.
-
-2️⃣ State Creation
-state = {
-    "title": payload["issue"]["title"],
-    "body": payload["issue"]["body"]
-}
-
-This state is passed into the LangGraph workflow.
-
-3️⃣ LangGraph Execution
-
-The workflow:
-
-Analyzes issue content
-
-Makes decisions
-
-Returns structured output
-
+OPENAI_API_KEY=your_key
+GITHUB_TOKEN=your_token
 🛠️ Setup Instructions
 1️⃣ Clone the Repository
 git clone https://github.com/your-username/github-issue-automation.git
