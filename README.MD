@@ -99,7 +99,11 @@ flowchart LR
     3️⃣ Install Dependencies
         pip install -r requirements.txt
     4️⃣ Run the Server
-        uvicorn app.main:app --reload
+
+        uvicorn app.main:app --reload --port 8000 ## main webhook api endpoint
+        uvicorn app.mcp.server --reload --port 9000 ## api endpoints for labels, comment and assign tools
+
+        NOTE: Make sure you install (ngrok) and run in cmd at 8000 port to make webhook endpoint available for github , if you are running it locally.
 
 Server runs at:
 
