@@ -138,6 +138,6 @@ flowchart LR
 
         Issues
 
-#### Now every new issue will trigger your system.
+#### Now every new issue will trigger the system.
 
 
